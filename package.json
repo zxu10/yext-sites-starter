@@ -9,12 +9,11 @@
     "preview": "yext-sites-scripts preview"
   },
   "dependencies": {
-    "yext-sites-scripts": "file:../yext-sites-scripts",
+    "yext-sites-scripts": "git+ssh://git@github.com:mkilpatrick/yext-sites-scripts.git",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "vite": "^2.8.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.40",
