@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const getServerSideProps = () => {
     return { message: "Hello from the server!" };
   };
