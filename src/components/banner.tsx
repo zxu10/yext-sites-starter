@@ -8,12 +8,12 @@ type Banner = {
   name?: string;
   address?: Address;
   openTime?: string;
+  children?: React.ReactNode;
 }
 
-const renderPrettyAddress = (name?: string, address?: Address) =>  {
+const renderPrettyAddress = (address?: Address) => {
   return (
     <>
-      {name && <span>{name}&nbsp;</span>}
       {address && <span>{address.address1} in {address.city}, {address.region}</span>}
     </>
   )
@@ -23,17 +23,22 @@ const Banner = (props: Banner) => {
   const {
     name,
     address,
-    openTime
+    openTime,
+    children,
   } = props;
 
   return (
     <>
-      <div className="bg-red-900 text-5xl font-bold text-white min-h-60 p-8 flex items-center justify-center flex-col space-y-10">
-        <div>{renderPrettyAddress(name, address)}</div>
-        <div>Open Until {openTime}</div>
+      <div className="bg-red-900 text-5xl font-bold text-white p-4 flex items-center justify-center flex-row space-x-20 w-full">
+        <div className="flex-col space-y-10 text-center">
+          <div>{name}</div>
+          <div>{renderPrettyAddress(address)}</div>
+          <div>Open Until {openTime}</div>
+        </div>
+        {children}
       </div>
     </>
   );
 };
-  
+
 export default Banner;
