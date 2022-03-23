@@ -1,6 +1,8 @@
-export const getServerSideProps = () => {
-    return { message: "Hello from the server!" };
-  };
+import Banner, { Address } from "../components/banner";
+
+// export const getServerSideProps = () => {
+//     return { message: "Hello from the server!" };
+//   };
 
 export const config = {
   name: "index",
@@ -23,13 +25,24 @@ export const config = {
     },
   },
 };
-  
+
 type Props = {
-  message: string;
+  name: string;
+  address: Address;
 };
   
-const Homepage = ({ message }: Props) => {
-  return <div onClick={() => console.log("hello")}>{message}</div>;
+const Homepage = (props: any) => {
+  const {
+    name,
+    address,
+    openTime,
+  } = props;
+
+  return (
+    <>
+      <Banner name={name} address={address} openTime={openTime} />
+    </>
+  );
 };
   
 export default Homepage;
