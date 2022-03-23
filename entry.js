@@ -20,7 +20,6 @@ const hydrate = async () => {
      * Get the templateFilename from the template. See {@link ./ssr/serverRenderRoute.ts}.
      */
     const templateFilename = window._RSS_TEMPLATE_.split('.')[0];
-    console.log(routes);
 
     const { default: component } = await routes.find((route) => route.name === templateFilename)?.getComponent();
     ReactDOM.hydrate(_jsx(App, { page: {
