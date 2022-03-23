@@ -28,7 +28,7 @@ const Banner = (props: Banner) => {
 
   return (
     <>
-      <div>
+      <div className="bg-red-900 text-5xl font-bold text-white min-h-60 p-8 flex items-center justify-center flex-col space-y-10">
         <div>{renderPrettyAddress(name, address)}</div>
         <div>Open Until {openTime}</div>
       </div>
