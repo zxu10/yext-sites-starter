@@ -1,6 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import ReactDOM from "react-dom";
 import { createElement } from "react";
+import "./src/index.css";
 
 export const App = ({ page }) => {
     return createElement(page?.component, page?.props);
