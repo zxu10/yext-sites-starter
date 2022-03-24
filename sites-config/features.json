@@ -10,6 +10,14 @@
         "entityPageSet": {
             "plugin": {}
         }
+      },
+      {
+        "name": "MLOs",
+        "streamId": "sites-mlo",
+        "templateType": "JS",
+        "entityPageSet": {
+            "plugin": {}
+        }
       }
     ],
     "streams": [
@@ -31,7 +39,9 @@
             "geocodedCoordinate",
             "services",
             "neighborhood",
-            "paymentOptions"
+            "paymentOptions",
+            "c_relatedFAQs.question",
+            "c_relatedFAQs.answer"
         ],
         "filter": {
           "entityTypes": [
@@ -44,6 +54,34 @@
           ],
           "primary": false
         }
-      }
+      },
+      {
+        "$id": "sites-mlo",
+        "source": "knowledgeGraph",
+        "destination": "pages",
+        "fields": [
+            "id", 
+            "uid", 
+            "meta",
+            "name", 
+            "address", 
+            "mainPhone",
+            "description", 
+            "hours",
+            "headshot",
+            "slug"
+        ],
+        "filter": {
+          "entityTypes": [
+            "financialProfessional"
+          ]
+        },
+        "localization": {
+          "locales": [
+            "en"
+          ],
+          "primary": false
+        }
+      }      
     ]
   }
