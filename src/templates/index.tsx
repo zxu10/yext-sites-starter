@@ -1,5 +1,6 @@
 import Banner, { Address } from "../components/banner";
 import Cta from "../components/cta";
+import Hours from "../components/hours";
 
 // export const getServerSideProps = () => {
 //     return { message: "Hello from the server!" };
@@ -37,6 +38,7 @@ const Homepage = (props: any) => {
     name,
     address,
     openTime,
+    hours,
   } = props;
 
   return (
@@ -47,6 +49,7 @@ const Homepage = (props: any) => {
           <Cta buttonText="Get Directions" url="http://google.com" />
         </div>
       </Banner>
+      <Hours title={"Restaurant Hours"} hours={hours} />
     </>
   );
 };
