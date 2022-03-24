@@ -1,7 +1,9 @@
 export type Address = {
-  address1: string;
+  line1: string;
   city: string;
   region: string;
+  postalCode: string;
+  countryCode: string;
 }
 
 type Banner = {
@@ -14,7 +16,7 @@ type Banner = {
 const renderPrettyAddress = (address?: Address) => {
   return (
     <>
-      {address && <span>{address.address1} in {address.city}, {address.region}</span>}
+      {address && <span>{address.line1} in {address.city}, {address.region}</span>}
     </>
   )
 }
