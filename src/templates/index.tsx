@@ -5,6 +5,9 @@ import Cta from "../components/cta";
 import Contact from "../components/contact";
 import FeaturedItems from "../components/featured-items";
 import Hours from "../components/hours";
+import Contact from "../components/contact";
+import FeaturedItems from "../components/featured-items";
+
 
 // export const getServerSideProps = () => {
 //     return { message: "Hello from the server!" };
@@ -69,6 +72,15 @@ const Homepage = (props: any) => {
         <Footer></Footer>
       </div>
       <Hours title={"Restaurant Hours"} hours={hours} />
+      <div className="centered-container">
+        {/* <Hours></Hours> */}
+        <div className="section">
+          <Contact address={address} phone={mainPhone}></Contact>
+        </div>
+        <div className="section">
+        </div>
+        <Footer></Footer>
+      </div>
     </>
   );
 };
