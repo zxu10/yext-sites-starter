@@ -4,6 +4,7 @@ import Footer from "../components/footer";
 import Cta from "../components/cta";
 import Contact from "../components/contact";
 import FeaturedItems from "../components/featured-items";
+import Hours from "../components/hours";
 
 // export const getServerSideProps = () => {
 //     return { message: "Hello from the server!" };
@@ -67,6 +68,7 @@ const Homepage = (props: any) => {
         </div>
         <Footer></Footer>
       </div>
+      <Hours title={"Restaurant Hours"} hours={hours} />
     </>
   );
 };
