@@ -24,20 +24,51 @@ type OpenIntervals = {
   end: string;
 }
 
-const sorter: { [key: string]: number } = {
+const todayIndex = new Date().getDay();
+
+/**
+ * Dynamically creates a sort order based on today's day.
+ */
+function getSorterForCurrentDay(): { [key: string]: number } {
+  let dayIndexes = [0, 1, 2, 3, 4, 5, 6];
+
+  let updatedDayIndexes = [];
+  for (let i = 0; i < dayIndexes.length; i++) {
+    let dayIndex = dayIndexes[i];
+    if (dayIndex - todayIndex >= 0) {
+      dayIndex = dayIndex - todayIndex;
+    } else {
+      dayIndex = dayIndex + 7 - todayIndex;
+    }
+    updatedDayIndexes[i] = dayIndex;
+  }
+
+
+  return {
+    "sunday": updatedDayIndexes[0],
+    "monday": updatedDayIndexes[1],
+    "tuesday": updatedDayIndexes[2],
+    "wednesday": updatedDayIndexes[3],
+    "thursday": updatedDayIndexes[4],
+    "friday": updatedDayIndexes[5],
+    "saturday": updatedDayIndexes[6],
+  }
+}
+
+const defaultSorter: { [key: string]: number } = {
+  "sunday": 0,
   "monday": 1,
   "tuesday": 2,
   "wednesday": 3,
   "thursday": 4,
   "friday": 5,
   "saturday": 6,
-  "sunday": 7
 };
 
 function sortByDay(week: Week): Week {
   let tmp = [];
   for (const [k, v] of Object.entries(week)) {
-    tmp[sorter[k]] = { key: k, value: v };
+    tmp[getSorterForCurrentDay()[k]] = { key: k, value: v };
   }
 
   let orderedWeek: Week = {};
@@ -51,39 +82,59 @@ function sortByDay(week: Week): Week {
 const renderHours = (week: Week) => {
   let dayDom: JSX.Element[] = [];
   for (const [k, v] of Object.entries(sortByDay(week))) {
-    dayDom.push(<DayRow key={k} dayName={k} day={v} />);
+    dayDom.push(<DayRow key={k} dayName={k} day={v} isToday={isToday(k)} />);
   }
 
   return (
-    <tbody>
+    <tbody className="font-normal">
       {dayDom}
     </tbody>
   );
 }
 
-function convertTo12HourFormat(hours: string) {
-  return ((Number(hours) + 11) % 12 + 1);
+function isToday(dayName: string) {
+  return defaultSorter[dayName] == todayIndex;
+}
+
+function convertTo12HourFormat(time: string, includeMeridiem: boolean): string {
+  const timeParts = time.split(":");
+  let hour = Number(timeParts[0]);
+  const minutesString = timeParts[1];
+  const meridiem = (hour < 12 || hour == 24) ? 'AM' : 'PM'; // Set AM/PM
+  hour = hour % 12 || 12; // Adjust hours
+
+  return hour.toString() + ":" + minutesString + (includeMeridiem ? meridiem : "");
 }
 
 type DayRow = {
   dayName: string;
   day: Day;
+  isToday?: boolean;
 }
 
 const DayRow = (props: DayRow) => {
   const {
     dayName,
     day,
+    isToday,
   } = props;
 
   return (
-    <tr>
-      <th className="capitalize text-left pr-4">{dayName}</th>
+    <tr className={isToday ? 'bg-gray-200 font-bold' : ''}>
+      <td className="capitalize text-left pl-1 pr-4">
+        <span>{dayName}</span>
+      </td>
       {!day.isClosed &&
-        <th>{day.openIntervals[0].start} - {day.openIntervals[0].end}</th>
+        <td className="pr-1">
+          <span>
+            {convertTo12HourFormat(day.openIntervals[0].start, true)} - {convertTo12HourFormat(day.openIntervals[0].end, true)}
+          </span>
+        </td>
       }
       {day.isClosed &&
-        <th>Closed</th>
+        <td className="pr-1">
+          <span>Closed</span>
+        </td>
       }
     </tr>
   );
@@ -97,7 +148,7 @@ const Hours = (props: Hours) => {
 
   return (
     <>
-      <div>{title}</div>
+      <div className="font-bold mb-2">{title}</div>
       <table>
         <thead className="sr-only">
           <tr>
