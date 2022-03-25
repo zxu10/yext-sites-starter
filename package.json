@@ -6,20 +6,25 @@
   "scripts": {
     "dev": "yext-sites-scripts dev",
     "build": "yext-sites-scripts build",
-    "preview": "yext-sites-scripts preview"
+    "preview": "yext-sites-scripts preview",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"entry.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
+    "@yext/yext-sites-scripts": "^0.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.2",
-    "@yext/yext-sites-scripts": "^0.0.1"
+    "typescript": "^4.6.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.10",
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
-    "tailwindcss": "^3.0.23"
+    "prettier": "^2.6.1",
+    "tailwindcss": "^3.0.23",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0"
   }
 }
