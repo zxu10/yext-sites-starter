@@ -13,8 +13,6 @@ type Header = {
 const Header = (props: Header) => {
   const { links, logo } = props;
 
-  console.log(links);
-
   return (
     <>
       <div className="centered-container">

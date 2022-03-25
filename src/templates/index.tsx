@@ -34,8 +34,6 @@ type Props = {
 const Homepage = (props: any) => {
   const { name, address, openTime, hours, mainPhone, _site } = props;
 
-  console.log(address);
-
   return (
     <>
       <Header

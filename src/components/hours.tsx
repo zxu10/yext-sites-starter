@@ -30,9 +30,9 @@ const todayIndex = new Date().getDay();
  * Dynamically creates a sort order based on today's day.
  */
 function getSorterForCurrentDay(): { [key: string]: number } {
-  let dayIndexes = [0, 1, 2, 3, 4, 5, 6];
+  const dayIndexes = [0, 1, 2, 3, 4, 5, 6];
 
-  let updatedDayIndexes = [];
+  const updatedDayIndexes = [];
   for (let i = 0; i < dayIndexes.length; i++) {
     let dayIndex = dayIndexes[i];
     if (dayIndex - todayIndex >= 0) {
@@ -65,13 +65,13 @@ const defaultSorter: { [key: string]: number } = {
 };
 
 function sortByDay(week: Week): Week {
-  let tmp = [];
+  const tmp = [];
   for (const [k, v] of Object.entries(week)) {
     tmp[getSorterForCurrentDay()[k]] = { key: k, value: v };
   }
 
-  let orderedWeek: Week = {};
-  tmp.forEach(function (obj) {
+  const orderedWeek: Week = {};
+  tmp.forEach((obj) => {
     orderedWeek[obj.key] = obj.value;
   });
 
@@ -79,23 +79,23 @@ function sortByDay(week: Week): Week {
 }
 
 const renderHours = (week: Week) => {
-  let dayDom: JSX.Element[] = [];
+  const dayDom: JSX.Element[] = [];
   for (const [k, v] of Object.entries(sortByDay(week))) {
-    dayDom.push(<DayRow key={k} dayName={k} day={v} isToday={isToday(k)} />);
+    dayDom.push(<DayRow key={k} dayName={k} day={v} isToday={isDayToday(k)} />);
   }
 
   return <tbody className="font-normal">{dayDom}</tbody>;
 };
 
-function isToday(dayName: string) {
-  return defaultSorter[dayName] == todayIndex;
+function isDayToday(dayName: string) {
+  return defaultSorter[dayName] === todayIndex;
 }
 
 function convertTo12HourFormat(time: string, includeMeridiem: boolean): string {
   const timeParts = time.split(':');
   let hour = Number(timeParts[0]);
   const minutesString = timeParts[1];
-  const meridiem = hour < 12 || hour == 24 ? 'AM' : 'PM'; // Set AM/PM
+  const meridiem = hour < 12 || hour === 24 ? 'AM' : 'PM'; // Set AM/PM
   hour = hour % 12 || 12; // Adjust hours
 
   return hour.toString() + ':' + minutesString + (includeMeridiem ? meridiem : '');
