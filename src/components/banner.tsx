@@ -4,30 +4,29 @@ export type Address = {
   region: string;
   postalCode: string;
   countryCode: string;
-}
+};
 
 type Banner = {
   name?: string;
   address?: Address;
   openTime?: string;
   children?: React.ReactNode;
-}
+};
 
 const renderPrettyAddress = (address?: Address) => {
   return (
     <>
-      {address && <span>{address.line1} in {address.city}, {address.region}</span>}
+      {address && (
+        <span>
+          {address.line1} in {address.city}, {address.region}
+        </span>
+      )}
     </>
-  )
-}
+  );
+};
 
 const Banner = (props: Banner) => {
-  const {
-    name,
-    address,
-    openTime,
-    children,
-  } = props;
+  const { name, address, openTime, children } = props;
 
   return (
     <>

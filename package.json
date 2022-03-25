@@ -7,7 +7,7 @@
     "dev": "yext-sites-scripts dev",
     "build": "yext-sites-scripts build",
     "preview": "yext-sites-scripts preview",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"entry.js\"",
+    "format": "prettier --write \"src/**/*.tsx\" \"entry.js\"",
     "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
