@@ -11,7 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@yext/yext-sites-scripts": "^0.0.6",
+    "@yext/yext-sites-scripts": "^0.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "ts-node": "^10.7.0",
