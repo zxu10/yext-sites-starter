@@ -8,7 +8,7 @@
     "build": "yss build",
     "preview": "yss preview",
     "format": "prettier --write \"src/**/*.tsx\" \"entry.js\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@yext/yext-sites-scripts": "^0.0.6",
