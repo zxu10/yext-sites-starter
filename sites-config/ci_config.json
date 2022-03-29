@@ -1,23 +1,44 @@
 {
-    "artifactStructure": {
-      "assets": [
-        {
-          "root": "dist/",
-          "pattern": "*"
-        }
-      ],
-      "features": "sites-config/features.json"
-    },
-    "dependencies": {
-      "installDepsCmd": "yarn",
-      "requiredFiles": [
-        "package.json"
-      ]
-    },
-    "buildArtifacts": {
-      "buildCmd": "yarn build"
-    },
-    "livePreview": {
-      "serveSetupCmd": ":"
-    }
+  "artifactStructure": {
+    "assets": [
+      {
+        "root": "dist/"
+      }
+    ],
+    "features": "sites-config/features.json",
+    "plugins": [
+      {
+        "pluginName": "Generator",
+        "sourceFiles": [
+          {
+            "root": "./node_modules/ssg-plugin/plugin",
+            "pattern": "**/*.{ts,json}"
+          },
+          {
+            "root": ".yext/",
+            "pattern": "manifest.json"
+          },
+          {
+            "pattern": "dist/**/*.js"
+          }
+        ],
+        "event": "ON_PAGE_GENERATE",
+        "functionName": "Generate"
+      }
+    ]
+  },
+  "dependencies": {
+    "installDepsCmd": "npm install",
+    "requiredFiles": [
+      "package.json",
+      "package-lock.json",
+      ".node-version"
+    ]
+  },
+  "buildArtifacts": {
+    "buildCmd": "npm run build"
+  },
+  "livePreview": {
+    "serveSetupCmd": ":"
+  }
 }
