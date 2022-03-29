@@ -14,18 +14,18 @@ export const config = {
     filter: {
       entityTypes: ['product'],
     },
+    localization: {
+      locales: [
+        "en"
+      ],
+      primary: false
+    },
   },
 };
 
 export const getPath = (data: any) => {
   return Math.random();
 }
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const cogData = fs.readFileSync('localData/fastfood__631a91f020286f3ddf808a2dd52ce209.json')
-
-//   return JSON.parse(cogData.toString());
-// };
 
 export const Page = (props: any) => {
   const [num, setNum] = useState<number>(0);

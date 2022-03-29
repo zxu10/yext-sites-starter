@@ -1,10 +1,9 @@
-import Banner, { Address } from '../components/banner';
+import Banner from '../components/banner';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import Cta from '../components/cta';
 import Contact from '../components/contact';
 import Hours from '../components/hours';
-import FeaturedItems from '../components/featured-items';
 import { reactWrapper } from '../wrapper';
 import { renderToString } from "react-dom/server";
 
@@ -16,9 +15,32 @@ export const config = {
     $id: 'products',
     source: 'knowledgeGraph',
     destination: 'pages',
-    fields: ['name', 'meta', 'id', 'uid'],
+    "fields": [
+      "id",
+      "uid",
+      "meta",
+      "name",
+      "address",
+      "mainPhone",
+      "description",
+      "hours",
+      "photoGallery",
+      "slug",
+      "geocodedCoordinate",
+      "services",
+      "neighborhood",
+      "paymentOptions",
+      "c_relatedFAQs.question",
+      "c_relatedFAQs.answer",
+    ],
     filter: {
-      entityTypes: ['product'],
+      entityTypes: ['location'],
+    },
+    localization: {
+      locales: [
+        "en"
+      ],
+      primary: false
     },
   },
 };
