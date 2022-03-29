@@ -5,10 +5,8 @@ import Cta from '../components/cta';
 import Contact from '../components/contact';
 import Hours from '../components/hours';
 import FeaturedItems from '../components/featured-items';
-
-// export const getServerSideProps = () => {
-//     return { message: "Hello from the server!" };
-//   };
+import { reactWrapper } from '../wrapper';
+import { renderToString } from "react-dom/server";
 
 export const config = {
   name: 'index',
@@ -25,13 +23,11 @@ export const config = {
   },
 };
 
-type Props = {
-  name: string;
-  address: Address;
-  mainPhone: string;
-};
+export const getPath = (data: any) => {
+  return data.document.streamOutput.uid;
+}
 
-const Homepage = (props: any) => {
+export const Page = (props: any) => {
   const { name, address, openTime, hours, mainPhone, _site } = props;
 
   return (
@@ -60,4 +56,11 @@ const Homepage = (props: any) => {
   );
 };
 
-export default Homepage;
+export const render = (data: any) =>
+  reactWrapper(
+    data,
+    'index',
+    'index.tsx',
+    renderToString(<Page data={data} />),
+    true
+  );

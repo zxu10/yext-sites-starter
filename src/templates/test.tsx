@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { renderToString } from "react-dom/server";
+import { reactWrapper } from '../wrapper';
 
 export const config = {
   name: 'Product Test',
@@ -15,13 +17,17 @@ export const config = {
   },
 };
 
+export const getPath = (data: any) => {
+  return Math.random();
+}
+
 // export const getServerSideProps: GetServerSideProps = async () => {
 //   const cogData = fs.readFileSync('localData/fastfood__631a91f020286f3ddf808a2dd52ce209.json')
 
 //   return JSON.parse(cogData.toString());
 // };
 
-const Test = (props: any) => {
+export const Page = (props: any) => {
   const [num, setNum] = useState<number>(0);
 
   return (
@@ -33,4 +39,11 @@ const Test = (props: any) => {
   );
 };
 
-export default Test;
+export const render = (data: any) =>
+  reactWrapper(
+    data,
+    'index',
+    'index.tsx',
+    renderToString(<Page data={data} />),
+    true
+  );
