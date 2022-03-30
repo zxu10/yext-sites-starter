@@ -27,7 +27,7 @@ export const getPath = (data: any) => {
   return Math.random();
 }
 
-export const Page = (props: any) => {
+const Test = (props: any) => {
   const [num, setNum] = useState<number>(0);
 
   return (
@@ -44,6 +44,8 @@ export const render = (data: any) =>
     data,
     'index',
     'index.tsx',
-    renderToString(<Page data={data} />),
+    renderToString(<Test data={data} />),
     true
   );
+
+  export default Test;

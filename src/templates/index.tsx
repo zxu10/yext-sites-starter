@@ -49,8 +49,10 @@ export const getPath = (data: any) => {
   return data.document.streamOutput.uid;
 }
 
-export const Page = (props: any) => {
-  const { name, address, openTime, hours, mainPhone, _site } = props;
+const Index = ({ data }: { data: any }) => {
+  const { document } = data;
+  const { streamOutput } = document;
+  const { name, address, openTime, hours, mainPhone, _site } = streamOutput;
 
   return (
     <>
@@ -83,6 +85,8 @@ export const render = (data: any) =>
     data,
     'index',
     'index.tsx',
-    renderToString(<Page data={data} />),
+    renderToString(<Index data={data} />),
     true
   );
+
+  export default Index;
