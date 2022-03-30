@@ -11,7 +11,7 @@
         "pluginName": "Generator",
         "sourceFiles": [
           {
-            "root": "./node_modules/ssg-plugin/plugin",
+            "root": "./node_modules/@yext/yext-sites-scripts/node_modules/ssg-plugin/plugin",
             "pattern": "**/*.{ts,json}"
           },
           {
@@ -36,7 +36,7 @@
     ]
   },
   "buildArtifacts": {
-    "buildCmd": "npm run build"
+    "buildCmd": "rm -rf .artifact_output/ && npm run build"
   },
   "livePreview": {
     "serveSetupCmd": ":"

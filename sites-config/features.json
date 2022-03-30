@@ -1,87 +1,78 @@
 {
-    "locales": [
-      "en"
-    ],
-    "features": [
-      {
-        "name": "Locations",
-        "streamId": "sites-locationEntity",
-        "templateType": "JS",
-        "entityPageSet": {
-            "plugin": {}
-        }
-      },
-      {
-        "name": "MLOs",
-        "streamId": "sites-mlo",
-        "templateType": "JS",
-        "entityPageSet": {
-            "plugin": {}
-        }
+  "features": [
+    {
+      "name": "index",
+      "streamId": "products",
+      "templateType": "JS",
+      "entityPageSet": {
+        "plugin": {}
       }
-    ],
-    "streams": [
-      {
-        "$id": "sites-locationEntity",
-        "source": "knowledgeGraph",
-        "destination": "pages",
-        "fields": [
-            "id", 
-            "uid", 
-            "meta",
-            "name", 
-            "address", 
-            "mainPhone",
-            "description", 
-            "hours",
-            "photoGallery",
-            "slug",
-            "geocodedCoordinate",
-            "services",
-            "neighborhood",
-            "paymentOptions",
-            "c_relatedFAQs.question",
-            "c_relatedFAQs.answer"
-        ],
-        "filter": {
-          "entityTypes": [
-            "location"
-          ]
-        },
-        "localization": {
-          "locales": [
-            "en"
-          ],
-          "primary": false
-        }
+    },
+    {
+      "name": "Product Test",
+      "streamId": "products-test",
+      "templateType": "JS",
+      "entityPageSet": {
+        "plugin": {}
+      }
+    }
+  ],
+  "streams": [
+    {
+      "$id": "products",
+      "source": "knowledgeGraph",
+      "destination": "pages",
+      "fields": [
+        "id",
+        "uid",
+        "meta",
+        "name",
+        "address",
+        "mainPhone",
+        "description",
+        "hours",
+        "photoGallery",
+        "slug",
+        "geocodedCoordinate",
+        "services",
+        "neighborhood",
+        "paymentOptions",
+        "c_relatedFAQs.question",
+        "c_relatedFAQs.answer"
+      ],
+      "filter": {
+        "entityTypes": [
+          "location"
+        ]
       },
-      {
-        "$id": "sites-mlo",
-        "source": "knowledgeGraph",
-        "destination": "pages",
-        "fields": [
-            "id", 
-            "uid", 
-            "meta",
-            "name", 
-            "address", 
-            "mainPhone",
-            "description", 
-            "hours",
-            "headshot",
-            "slug"
+      "localization": {
+        "locales": [
+          "en"
         ],
-        "filter": {
-          "entityTypes": [
-            "financialProfessional"
-          ]
-        },
-        "localization": {
-          "locales": [
-            "en"
-          ],
-          "primary": false
-        }
-      }      
-    ]
-  }
+        "primary": false
+      }
+    },
+    {
+      "$id": "products-test",
+      "source": "knowledgeGraph",
+      "destination": "pages",
+      "fields": [
+        "name",
+        "meta",
+        "id",
+        "uid"
+      ],
+      "filter": {
+        "entityTypes": [
+          "product"
+        ]
+      },
+      "localization": {
+        "locales": [
+          "en"
+        ],
+        "primary": false
+      }
+    }
+  ]
+}

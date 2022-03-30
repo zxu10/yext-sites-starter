@@ -5,9 +5,8 @@ import { reactWrapper } from '../wrapper';
 export const config = {
   name: 'Product Test',
   hydrate: true,
-  streamId: 'products',
   stream: {
-    $id: 'products',
+    $id: 'products-test',
     source: 'knowledgeGraph',
     destination: 'pages',
     fields: ['name', 'meta', 'id', 'uid'],
@@ -24,15 +23,18 @@ export const config = {
 };
 
 export const getPath = (data: any) => {
-  return Math.random();
+  return `test/${Math.random().toString()}`;
 }
 
 const Test = (props: any) => {
+  const { document } = props.data;
+  const { streamOutput } = document;
+  const { name } = streamOutput;
   const [num, setNum] = useState<number>(0);
 
   return (
     <>
-      <div>Hello from {props.name} starter</div>
+      <div>Hello from {name} starter</div>
       <button onClick={() => setNum(num + 1)}>Click me</button>
       Num: {num}
     </>
@@ -42,8 +44,8 @@ const Test = (props: any) => {
 export const render = (data: any) =>
   reactWrapper(
     data,
-    'index',
-    'index.tsx',
+    'Product Test',
+    'test.tsx',
     renderToString(<Test data={data} />),
     true
   );

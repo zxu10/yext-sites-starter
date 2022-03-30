@@ -10,7 +10,6 @@ import { renderToString } from "react-dom/server";
 export const config = {
   name: 'index',
   hydrate: true,
-  streamId: 'products',
   stream: {
     $id: 'products',
     source: 'knowledgeGraph',
@@ -46,7 +45,7 @@ export const config = {
 };
 
 export const getPath = (data: any) => {
-  return data.document.streamOutput.uid;
+  return `index/${data.document.streamOutput.uid.toString()}`;
 }
 
 const Index = ({ data }: { data: any }) => {
@@ -66,7 +65,7 @@ const Index = ({ data }: { data: any }) => {
           <Cta buttonText="Get Directions" url="http://google.com" />
         </div>
       </Banner>
-      <Hours title={'Restaurant Hours'} hours={hours} />
+      {hours && <Hours title={'Restaurant Hours'} hours={hours} />}
       <div className="centered-container">
         {/* <Hours></Hours> */}
         <div className="section">
@@ -86,7 +85,7 @@ export const render = (data: any) =>
     'index',
     'index.tsx',
     renderToString(<Index data={data} />),
-    true
+    config.hydrate,
   );
 
   export default Index;
