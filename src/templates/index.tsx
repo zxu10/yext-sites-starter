@@ -10,6 +10,7 @@ import { renderToString } from "react-dom/server";
 export const config = {
   name: 'index',
   hydrate: true,
+  streamId: "products",
   stream: {
     $id: 'products',
     source: 'knowledgeGraph',

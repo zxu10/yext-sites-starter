@@ -5,6 +5,7 @@ import { reactWrapper } from '../wrapper';
 export const config = {
   name: 'Product Test',
   hydrate: true,
+  streamId: "products-test",
   stream: {
     $id: 'products-test',
     source: 'knowledgeGraph',
