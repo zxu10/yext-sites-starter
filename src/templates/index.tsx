@@ -6,6 +6,7 @@ import Contact from '../components/contact';
 import Hours from '../components/hours';
 import { reactWrapper } from '../wrapper';
 import { renderToString } from "react-dom/server";
+import "../index.css";
 
 export const config = {
   name: 'index',
