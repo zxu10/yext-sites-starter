@@ -28,15 +28,14 @@
     ]
   },
   "dependencies": {
-    "installDepsCmd": "npm install",
+    "installDepsCmd": "npm install --production=false",
     "requiredFiles": [
       "package.json",
-      "package-lock.json",
-      ".node-version"
+      "package-lock.json"
     ]
   },
   "buildArtifacts": {
-    "buildCmd": "rm -rf .artifact_output/ && npm run build"
+    "buildCmd": "npm run directbuild"
   },
   "livePreview": {
     "serveSetupCmd": ":"
