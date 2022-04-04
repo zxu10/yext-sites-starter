@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.10",
-    "@yext/yext-sites-scripts": "^0.0.8",
+    "@yext/yext-sites-scripts": "mkilpatrick/yext-sites-scripts#4dd1166c1a8fa279fa7583aa75896eccb93f0a6d",
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
     "prettier": "^2.6.1",
