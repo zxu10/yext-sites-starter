@@ -27,7 +27,7 @@ const getCssTags = (name: string, data: any) => {
     if (file !== `src/templates/${name}`) {
       continue;
     }
-    const cssFiles = (info as ManifestInfo).css;
+    const cssFiles = (info as ManifestInfo).css || [];
     return cssFiles.map((file) => `<link rel="stylesheet" href="/${file}"/>`);
   }
 
