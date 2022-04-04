@@ -3,7 +3,10 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import Cta from '../components/cta';
 import Contact from '../components/contact';
+import List from '../components/list';
 import Hours from '../components/hours';
+import StaticMap from '../components/static-map';
+import PhotoGallery from '../components/photo-gallery';
 import { reactWrapper } from '../wrapper';
 import { renderToString } from "react-dom/server";
 import "../index.css";
@@ -53,30 +56,44 @@ export const getPath = (data: any) => {
 const Index = ({ data }: { data: any }) => {
   const { document } = data;
   const { streamOutput } = document;
-  const { name, address, openTime, hours, mainPhone, _site } = streamOutput;
+  const { name, address, openTime, hours, mainPhone, _site, geocodedCoordinate, services, photoGallery } = streamOutput;
 
   return (
     <>
+      <div className="centered-container">
       <Header
-        logo="https://logos-download.com/wp-content/uploads/2020/06/Yext_Logo-700x700.png"
+        logo="https://cdn.fs.brandfolder.com/cache=expiry:604800/deY3VGFpSjC761Abjbfc"
         links={_site.c_header}
       ></Header>
+      </div>
       <Banner name={name} address={address} openTime={openTime}>
-        <div className="bg-white h-40 w-1/5 flex items-center justify-center text-center flex-col space-y-4">
+        <div className="bg-white h-40 w-1/5 flex items-center justify-center text-center flex-col space-y-4 rounded-lg">
           <div className="text-black text-base">Visit Us Today!</div>
-          <Cta buttonText="Get Directions" url="http://google.com" />
+          <Cta buttonText="Get Directions" url="http://google.com" style="primary-cta"/>
         </div>
       </Banner>
-      {hours && <Hours title={'Restaurant Hours'} hours={hours} />}
       <div className="centered-container">
-        {/* <Hours></Hours> */}
         <div className="section">
-          <Contact address={address} phone={mainPhone}></Contact>
+          <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+            <div className="bg-gray-100 p-5 space-y-12">
+              <Contact address={address} phone={mainPhone}></Contact>
+              <List list={services}></List>
+            </div>
+            <div className="col-span-2 pt-5 space-y-10">
+              <div>
+                {hours && <Hours title={'Restaurant Hours'} hours={hours} />}
+              </div>
+              <StaticMap latitude={geocodedCoordinate.latitude} longitude={geocodedCoordinate.longitude}></StaticMap>
+            </div>
+          </div>
         </div>
-        <div className="section"></div>
+        {/* <div className="section">
+          <PhotoGallery photoGallery={photoGallery}></PhotoGallery>
+        </div> */}
+        {/* <div className="section">
+        </div> */}
         <Footer></Footer>
       </div>
-      <Hours title={'Restaurant Hours'} hours={hours} />
     </>
   );
 };
