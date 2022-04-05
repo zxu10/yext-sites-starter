@@ -26,13 +26,9 @@ const Contact = (props: any) => {
   return (
     <>
       <div className="grid gap-y-5">
-        <div className="text-xl font-semibold">
-          Contact
-        </div>
+        <div className="text-xl font-semibold">Contact</div>
         <div className="grid gap-y-3">
-          <div className="">
-            {renderPrettyAddress(address)}
-          </div>
+          <div className="">{renderPrettyAddress(address)}</div>
           <div>
             <a href="#">{phone}</a>
           </div>

@@ -12,9 +12,13 @@ type Header = {
 
 const Header = (props: Header) => {
   const { links, logo } = props;
-  const linkDoms = links.map((link) =>
-    <div><a href={link.url} target='_blank'>{link.label}</a></div>
-  );
+  const linkDoms = links.map((link) => (
+    <div>
+      <a href={link.url} target="_blank">
+        {link.label}
+      </a>
+    </div>
+  ));
   return (
     <>
       <div className="centered-container">

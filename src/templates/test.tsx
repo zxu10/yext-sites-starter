@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { renderToString } from "react-dom/server";
+import { renderToString } from 'react-dom/server';
 import { reactWrapper } from '../wrapper';
 
 export const config = {
   name: 'Product Test',
   hydrate: true,
-  streamId: "products-test",
+  streamId: 'products-test',
   stream: {
     $id: 'products-test',
     source: 'knowledgeGraph',
@@ -15,17 +15,15 @@ export const config = {
       entityTypes: ['product'],
     },
     localization: {
-      locales: [
-        "en"
-      ],
-      primary: false
+      locales: ['en'],
+      primary: false,
     },
   },
 };
 
 export const getPath = (data: any) => {
   return `test/${Math.random().toString()}`;
-}
+};
 
 const Test = (props: any) => {
   const { document } = props.data;
@@ -43,12 +41,6 @@ const Test = (props: any) => {
 };
 
 export const render = (data: any) =>
-  reactWrapper(
-    data,
-    'Product Test',
-    'test.tsx',
-    renderToString(<Test data={data} />),
-    true
-  );
+  reactWrapper(data, 'Product Test', 'test.tsx', renderToString(<Test data={data} />), true);
 
-  export default Test;
+export default Test;
