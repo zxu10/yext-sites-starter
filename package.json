@@ -19,7 +19,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^4.6.2",
-    "@yext/yext-sites-scripts": "mkilpatrick/yext-sites-scripts#1f5608a4dca10a20f43925bfeba42bf2ffe872be"
+    "@yext/yext-sites-scripts": "mkilpatrick/yext-sites-scripts#95cd87700ab75c5c6895bc152ceb79083e2d6e7a"
   },
   "devDependencies": {
     "@types/react": "^17.0.40",
