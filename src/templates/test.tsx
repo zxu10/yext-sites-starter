@@ -41,6 +41,6 @@ const Test = (props: any) => {
 };
 
 export const render = (data: any) =>
-  reactWrapper(data, 'Product Test', 'test.tsx', renderToString(<Test data={data} />), true);
+  reactWrapper(data, 'Product Test', 'test.tsx', renderToString(<Test data={data} />), true, data);
 
 export default Test;
