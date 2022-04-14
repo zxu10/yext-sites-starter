@@ -19,7 +19,13 @@
             "pattern": "manifest.json"
           },
           {
-            "pattern": "dist/**/*.js"
+            "pattern": "dist/"
+          },
+          {
+            "pattern": "dist/assets/server/*.js"
+          },
+          {
+            "pattern": "dist/assets/*.js"
           }
         ],
         "event": "ON_PAGE_GENERATE",
