@@ -19,7 +19,7 @@
             "pattern": "manifest.json"
           },
           {
-            "pattern": "dist/*"
+            "pattern": "dist/*.{js,json}"
           },
           {
             "pattern": "dist/assets/server/*.js"
