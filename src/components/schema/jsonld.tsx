@@ -1,4 +1,5 @@
 import {LocalBusiness, Thing, WithContext, PostalAddress} from 'schema-dts';
+import PhotoGallery from '../photo-gallery';
 
 export function JsonLd<T extends Thing>(json: WithContext<T>): string {
   return `<script type="application/ld+json">
@@ -7,18 +8,33 @@ ${JSON.stringify(json)}
 }
 
 export const SchemaWrapper = (data: any) => {
+  return LocalBusinessSchemaWrapper(data)
+}
+
+export const LocalBusinessSchemaWrapper = (data: any) => {
   return JsonLd<LocalBusiness>({
     '@context': 'https://schema.org',
-    '@type': 'ClothingStore', // TODO: change this to match the current project's business type
-    "@id": data.document.streamOutput._site.uid,
+    '@type': 'LocalBusiness', // TODO: change this to match the current project's business type
     name: data.document.streamOutput.name,
     address: parseAddress(data.document.streamOutput.address),
     description: data.document.streamOutput.description,
     telephone: data.document.streamOutput.mainPhone,
-    image: data.document.streamOutput.photoGallery[0].image.url,
+    image: parsePhotoGallery(data.document.streamOutput.photoGallery),
     openingHours: parseOpeningHours(data.document.streamOutput.hours),
     paymentAccepted: data.document.streamOutput.paymentOptions,
+    makesOffer: data.document.streamOutput.services,
   });  
+}
+
+// takes in a list of yext images and return a list of image urls
+export const parsePhotoGallery = (gallery: any) => {
+  let imageArray = new Array<string>();
+
+  for (const photo of gallery) {
+    imageArray.push(photo.image.url)
+  }
+
+  return imageArray;
 }
 
 export const parseAddress = (address: any): PostalAddress => {
