@@ -1,92 +1,94 @@
-import {LocalBusiness, Thing, WithContext, PostalAddress} from 'schema-dts';
-import PhotoGallery from '../photo-gallery';
-
-export function JsonLd<T extends Thing>(json: WithContext<T>): string {
-  return `<script type="application/ld+json">
-${JSON.stringify(json)}
-</script>`;
-}
+import { OpeningHours } from '../../components/schema/hours';
+import { PhotoGallery } from '../../components/schema/photoGallery';
+import { Address, Location } from '../../components/schema/address';
+import { Review, AggregateRating } from '../../components/schema/review';
+import { Offer } from '../../components/schema/offers';
+import { Performer, Organization } from '../../components/schema/people';
 
 export const SchemaWrapper = (data: any) => {
-  return LocalBusinessSchemaWrapper(data)
-}
-
-export const LocalBusinessSchemaWrapper = (data: any) => {
-  return JsonLd<LocalBusiness>({
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness', // TODO: change this to match the current project's business type
-    name: data.document.streamOutput.name,
-    address: parseAddress(data.document.streamOutput.address),
-    description: data.document.streamOutput.description,
-    telephone: data.document.streamOutput.mainPhone,
-    image: parsePhotoGallery(data.document.streamOutput.photoGallery),
-    openingHours: parseOpeningHours(data.document.streamOutput.hours),
+  let json = {
+    ...LocalBusiness(data),
     paymentAccepted: data.document.streamOutput.paymentOptions,
     makesOffer: data.document.streamOutput.services,
-  });  
-}
-
-// takes in a list of yext images and return a list of image urls
-export const parsePhotoGallery = (gallery: any) => {
-  let imageArray = new Array<string>();
-
-  for (const photo of gallery) {
-    imageArray.push(photo.image.url)
   }
 
-  return imageArray;
+  return `<script type="application/ld+json">
+  ${JSON.stringify(json)}
+  </script>`;
 }
 
-export const parseAddress = (address: any): PostalAddress => {
+const BaseSchema = (data: any, schemaType: string) => {
   return {
-    "@type": "PostalAddress",
-    "streetAddress": address.line1,
-    "addressLocality": address.city,
-    "addressRegion": address.region,
-    "postalCode": address.postalCode,
-    "addressCountry": address.countryCode,
-  };
+    '@context': 'https://schema.org',
+    '@type': schemaType,
+    name: data.document.streamOutput.name,
+  }
 }
 
-// example output: ["Mo-Fr 10:00-19:00", "Sa 10:00-22:00", "Su 10:00-21:00"]
-// weekdays are indicated as Mo, Tu, We, Th, Fr, Sa, Su
-export const parseOpeningHours = (hours: any) => {
-  let hoursMap = new Map<string, Array<string>>();
-
-  hoursMap = getHoursByDay(hours.monday, hoursMap, "Mo")
-  hoursMap = getHoursByDay(hours.tuesday, hoursMap, "Tu")
-  hoursMap = getHoursByDay(hours.wednesday, hoursMap, "We")
-  hoursMap = getHoursByDay(hours.thursday, hoursMap, "Th")
-  hoursMap = getHoursByDay(hours.friday, hoursMap, "Fr")
-  hoursMap = getHoursByDay(hours.saturday, hoursMap, "Sa")
-  hoursMap = getHoursByDay(hours.sunday, hoursMap, "Su")
-
-  let hoursArray = new Array<string>();
-
-  for (const [interval, days] of hoursMap){
-    let daysOfWeek = days.join(",")
-    hoursArray.push(daysOfWeek + " " + interval)
+// LocalBusiness includes sub-LocalBusiness schema types, including:
+// FinancialService, TravelAgency, GovernmentOffice, ShoppingCenter, MedicalBusiness etc
+// pass different variables to the schemaType param if neededed
+// more sub-types see https://schema.org/LocalBusiness
+const LocalBusiness = (data: any, schemaType?: string) => {
+  return {
+    ...BaseSchema(data, schemaType ?? "LocalBusiness"), // default, if schemaType is nil, set to LocalBusiness
+    ...Address(data.document.streamOutput.address),
+    ...OpeningHours(data.document.streamOutput.hours),
+    ...PhotoGallery(data.document.streamOutput.photoGallery),
+    description: data.document.streamOutput.description,
+    telephone: data.document.streamOutput.mainPhone,
+    email: data.document.streamOutput.email,
   }
-
-  return hoursArray
 }
 
-export const getHoursByDay = (hours: any, hoursMap: Map<string, Array<string>>, day: string) => {
-  if (hours.isClosed == true) {
-    let interval = "00:00-00:00"
-    let days = hoursMap.get(interval) ?? Array<string>();
-    days.push(day)
-    hoursMap.set(interval, days);
-
-    return hoursMap
+const Product = (data: any, schemaType?: string) => {
+  return {
+    ...BaseSchema(data, schemaType ?? "Product"),
+    ...PhotoGallery(data.document.streamOutput.photoGallery),
+    ...Review(data.document.streamOutput.c_reviews),
+    ...AggregateRating(data.document.streamOutput.c_aggregateRating),
+    ...Offer({
+      url: "",
+      priceCurrency: data.document.streamOutput.c_currency,
+      price: data.document.streamOutput.price,
+      priceValidUntil: data.document.streamOutput.expirationDate,
+      itemCondition: data.document.streamOutput.stockStatus,
+      availability: data.document.streamOutput.availabilityDate,
+    }),
+    description: data.document.streamOutput.description,
+    sku: data.document.streamOutput.sku,
+    mpn: data.document.streamOutput.mpn,
+    brand: {
+      "@type": "Brand",
+      "name": data.document.streamOutput.brand,
+    },
   }
+}
 
-  for (let i = 0; i < hours.openIntervals.length; i++) {
-    let interval = hours.openIntervals[i].start + "-" + hours.openIntervals[i].end;
-    let days = hoursMap.get(interval) ?? Array<string>();
-    days.push(day)
-    hoursMap.set(interval, days);
+const Event = (data: any, schemaType?: string) => {
+  return {
+    ...BaseSchema(data, schemaType ?? "Event"),
+    ...PhotoGallery(data.document.streamOutput.photoGallery),
+    ...Location({
+      name: data.document.streamOutput.geomodifier,
+      address: data.document.streamOutput.address,
+    }),
+    startDate: data.document.streamOutput.c_startDate,
+    endDate: data.document.streamOutput.c_endDate,
+    description: data.document.streamOutput.description,
+    eventAttendanceMode: data.document.streamOutput.attendance,
+    eventStatus: data.document.streamOutput.eventStatus,
+    ...Performer(data.document.streamOutput.performers),
+    ...Organization({
+      name: data.document.streamOutput.organizerName,
+    }),
+    ...Offer({
+      url: "",
+      priceCurrency: data.document.streamOutput.c_currency,
+      price: data.document.streamOutput.price,
+      priceValidUntil: data.document.streamOutput.expirationDate,
+      itemCondition: data.document.streamOutput.stockStatus,
+      availability: data.document.streamOutput.availabilityDate,
+    }),
   }
-
-  return hoursMap
 }
